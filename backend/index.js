@@ -15,16 +15,20 @@ app.post("/todo", function async (req, res) {
     }
     await todo.create({
         title: createPayload.title,
-        description: createPayload.description
+        description: createPayload.description,
+        completed: false
     })
     res.json({
         msg: "new todo created"
     })
 })
-app.get("/todos", function (req, res) {
-    
+app.get("/todos", async function (req, res) {
+    const todos = await todo.find()
+    res.json({
+        todos
+    })
 })
-app.put("/completed", function (req, res) {
+app.put("/completed", async     function (req, res) {
     const updatePayload = req.body;
     const parsedPayload = updateTodo.safeParse(updatePayload);
     if (!parsedPayload.success) {
@@ -33,6 +37,14 @@ app.put("/completed", function (req, res) {
         })
         return;
     }
+    await todo.update({
+        _id: req.body.id
+    },  {
+            completed: true
+    })
+    res.json({
+        msg: "todo marked as completed"
+    })
 )
 
 app.listen(3000);
