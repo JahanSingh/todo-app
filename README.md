@@ -1,4 +1,4 @@
-## Hi there
+## Hi there, here comes your own todo app.
 This project contains a simple TODO application. I has the following features-
 
 A user can sign up
